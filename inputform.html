@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+
+<body>
+
+    <form name="harvestValuesForm">
+
+        Please signify crop type:
+        <select name="cropTypes">
+            <option value="corn">Corn</option>
+            <option value="rice">Rice</option>
+            <option value="wheat">Wheat</option>
+            <option value="beans">Beans</option>
+            <option value="tomatoes">Tomatoes</option>
+            <option value="potatoes">Potatoes</option>
+            <option value="carrots">Carrots</option>
+        </select>
+
+
+        <br />
+
+
+        Enter Crop Count:
+        <input type="number" id="cropCount" name="cropCount" value="0.000" step="0.001" oninput="valueChange(this)" required>
+        <select id="cropMonth" name="cropMonth" onchange="monthChange(this)">
+            <option selected value="1">January</option>
+            <option value="2">February</option>
+            <option values="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="=8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select> <br />
+
+        Unit:
+        <input type="radio" name="unit" id="kilos" value="kg" required checked="checked"> kg
+        <input type="radio" name="unit" id="tons" value="tons" /> tons <br />
+
+        Price/Unit:
+        <input type="number" name="cropCost" value="0.00" step="0.01" required /><br />
+
+        Monthly Wage Expenses:
+        <input type="number" name="monthlyAverage" value="0.00" step="0.01" required /><br />
+
+
+        Monthly Tool Expenses:
+        <input type="number" name="monthlyTools" value="0.00" step="0.01" required /> <br />
+
+        Monthly Utilities Expenses:
+        <input type="number" name="monthlyUtils" value="0.00" step="0.01" required /> <br />
+
+        <input type="submit" value="Submit" onclick="canContinue()" />
+
+    </form>
+    <script type="text/javascript" src="inputformvalidation.js"> </script>
+</body>
+</html>
