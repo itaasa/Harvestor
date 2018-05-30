@@ -7,18 +7,18 @@ var unit = "kg(s)";
 var wageExpenses = 0;
 var toolExpenses = 0;
 var utilExpenses = 0;
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var ctx = document.getElementById("myChart").getContext("2d");
 
 function canContinue() {
     if (positiveInputValidation()) {
         saveSingleData();
-        printInputValues(cropCounts, cropType, unit, cropPrice, wageExpenses, toolExpenses, utilExpenses);
-        alert("passed the printing");
-        return true;
-    }
-
-
-    return false;
+        addData();
+        //printInputValues(cropCounts, cropType, unit, cropPrice, wageExpenses, toolExpenses, utilExpenses);
+    } 
 }
+
+
 
 function positiveInputValidation() {
     for (i = 1; i < document.forms[0].length - 1; i++) {
@@ -70,6 +70,20 @@ function printInputValues(cropCounts, type, unit, price, wage, tool, util) {
     alert("The unit we will be using is: " + unit);
     alert("The price for each crop is: " + price);
     alert("The expenses are: (wage, tool, util) = (" + wage + ", " + tool + ", " + util + ")");
+}
+
+function addData() {
+    profitChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Crop Yield',
+                data: cropCounts
+            }]
+        },
+        options: {}
+    });    
 }
 
 
