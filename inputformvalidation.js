@@ -1,29 +1,23 @@
-// The following javascript will be called to ensure that all inputs from user are valid
+// The following javascript will be called to ensure that all inputs from user are valid, and saves all user input to the variables below
 
 var cropCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-var wageExpenses;
-var toolExpenses;
-var utilExpenses;
+var cropType = "Corn";
+var cropPrice = 0;
+var unit = "kg(s)";
+var wageExpenses = 0;
+var toolExpenses = 0;
+var utilExpenses = 0;
 
 function canContinue() {
-    if (unitValidation() && positiveInputValidation()) {
-        //Continue to the graph chart code
-        printArrayValues(cropCounts);
-        
+    if (positiveInputValidation()) {
+        saveSingleData();
+        printInputValues(cropCounts, cropType, unit, cropPrice, wageExpenses, toolExpenses, utilExpenses);
+        alert("passed the printing");
         return true;
     }
 
 
     return false;
-}
-
-function unitValidation() {
-    if (!document.getElementById('kilos').checked && !document.getElementById('tons').checked) {
-        alert("No values for unit of measurment has been checked. Please choose kg or tons!");
-        return false;
-    }
-
-    return true;
 }
 
 function positiveInputValidation() {
@@ -37,24 +31,45 @@ function positiveInputValidation() {
     return true;
 }
 
+//Will change the display html value depending on the month selected 
 function monthChange(val) {
     var cropCount = document.getElementById("cropCount");
     var selectedMonth = val.selectedIndex;
     document.getElementById("cropCount").value = cropCounts[selectedMonth];
 }
 
-//When the user enters values for each seperate month they must be saved to the arrays
+//When the user enters a new value for a month they must be saved to the array
 function valueChange(val) {
     var months = document.getElementById("cropMonth");
     var selectedMonth = months.selectedIndex;
     cropCounts[selectedMonth] = val.value;
 }
 
-function printArrayValues(val) {
+//will save the values set in  expenses to our javascript variables
+function saveSingleData() {
+    cropType = document.getElementById("cropTypes").value;
+    cropPrice = document.getElementById("cropPrice").value;
+
+    if (document.getElementById("kilos").checked)
+        unit = document.getElementById("kilos").value;
+    else
+        unit = document.getElementById("tons").value;
+
+    wageExpenses = document.getElementById("monthlyWage").value;
+    toolExpenses = document.getElementById("monthlyTool").value;
+    utilExpenses = document.getElementById("monthlyUtil").value;
+    
+}
+
+//used for testing
+function printInputValues(cropCounts, type, unit, price, wage, tool, util) {
     var i;
-    for (i = 0; i < 12; i++) {
-        alert("For month " + i + ":" + val[i]);
-    }
+
+    alert("Crop count for the year:" + cropCounts.toString());
+    alert("Crop Type: " + type);
+    alert("The unit we will be using is: " + unit);
+    alert("The price for each crop is: " + price);
+    alert("The expenses are: (wage, tool, util) = (" + wage + ", " + tool + ", " + util + ")");
 }
 
 
