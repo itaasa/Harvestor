@@ -5,15 +5,16 @@ var cropType = "Corn";
 var cropPrice = 0;
 var unit = "kg(s)";
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var ctx = document.getElementById("myChart").getContext("2d");
+var revenueContext = document.getElementById("revenueChart").getContext("2d");
+var profitContext = document.getElementById("profitChart").getContext("2d");
 
 function updateGraph() {
     if (positiveInputValidation()) {
         saveSingleData();
-        updateChartData();
+        updateRevenueChartData();
+        updateProfitChartData();
     } 
 }
-
 
 function positiveInputValidation() {
     for (i = 1; i < document.forms[0].length - 1; i++) {
@@ -37,7 +38,7 @@ function monthChange(val) {
 function valueChange(val) {
     var months = document.getElementById("cropMonth");
     var selectedMonth = months.selectedIndex;
-    cropCounts[selectedMonth] = val.value;
+    cropCounts[selectedMonth] = parseFloat(val.value);
 }
 
 //will save the non-array values to their specific javascript variables
@@ -50,26 +51,15 @@ function saveSingleData() {
     else
         unit = document.getElementById("tons").value;
 
-    wageExpenses = parseInt(document.getElementById("monthlyWage").value);
-    toolExpenses = parseInt(document.getElementById("monthlyTool").value);
-    utilExpenses = parseInt(document.getElementById("monthlyUtil").value);
+    wageExpenses = parseFloat(document.getElementById("monthlyWage").value);
+    toolExpenses = parseFloat(document.getElementById("monthlyTool").value);
+    utilExpenses = parseFloat(document.getElementById("monthlyUtil").value);
     
-}
-
-//used for testing
-function printInputValues(cropCounts, type, unit, price, wage, tool, util) {
-    var i;
-
-    alert("Crop count for the year:" + cropCounts.toString());
-    alert("Crop Type: " + type);
-    alert("The unit we will be using is: " + unit);
-    alert("The price for each crop is: " + price);
-    alert("The expenses are: (wage, tool, util) = (" + wage + ", " + tool + ", " + util + ")");
 }
 
 //Used to update the revenue/expenses graph with new values if values were changed
 function updateRevenueChartData() {
-    profitChart = new Chart(ctx, {
+    revenueChart = new Chart(revenueContext, {
         type: 'line',
         data: {
             labels: months,
@@ -100,11 +90,35 @@ function updateRevenueChartData() {
 
 //Used to update the profit/loss graph if values were changed
 function updateProfitChartData() {
+    revenueChart = new Chart(profitContext, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Profit/Loss',
+                data: calculateMonthlyProfit(),
+                fill: false,
+                borderColor: "#F6FF3D"
+            }
+            ],
+        },
 
+        options: {
+            title: {
+                display: true,
+                fontSize: 20,
+                text: "Profit/Loss"
+            },
+
+            scales: {
+                zeroLineColor: "#000000"
+            }
+        }
+    });    
 }
 
 
-//Returns array containing total revenue for each month
+//Returns array containing the revenue for each month
 function calculateMonthlyRevenue() {
 
     var i;
@@ -126,6 +140,20 @@ function calculateMonthlyExpenses() {
     }
 
     return expenses;
+}
+
+//Returns array containing the profit for each month
+function calculateMonthlyProfit() {
+    var i;
+    var profits = new Array();
+    var revenues = calculateMonthlyRevenue();
+    var expenses = calculateMonthlyExpenses();
+
+    for (i = 0; i < cropCounts.length; i++) {
+        profits[i] = revenues[i] - expenses[i]; 
+    }
+
+    return profits;
 }
 
 
