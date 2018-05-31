@@ -4,16 +4,21 @@ var cropCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var cropType = "Corn";
 var cropPrice = 0;
 var unit = "kg(s)";
+var wageExpenses = 0, toolExpenses = 0, utilExpenses = 0;
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var revenueContext = document.getElementById("revenueChart").getContext("2d");
 var profitContext = document.getElementById("profitChart").getContext("2d");
+var revenueChart, profitChart;
 
-function updateGraph() {
+
+createCharts();
+
+function updateGraphs() {
     if (positiveInputValidation()) {
         saveSingleData();
         updateRevenueChartData();
-        updateProfitChartData();
-    } 
+        updateProfitChartData();       
+    }
 }
 
 function positiveInputValidation() {
@@ -54,11 +59,11 @@ function saveSingleData() {
     wageExpenses = parseFloat(document.getElementById("monthlyWage").value);
     toolExpenses = parseFloat(document.getElementById("monthlyTool").value);
     utilExpenses = parseFloat(document.getElementById("monthlyUtil").value);
-    
+
 }
 
-//Used to update the revenue/expenses graph with new values if values were changed
-function updateRevenueChartData() {
+
+function createCharts() {
     revenueChart = new Chart(revenueContext, {
         type: 'line',
         data: {
@@ -85,12 +90,10 @@ function updateRevenueChartData() {
                 text: "Revenue and Expenses"
             }
         }
-    });    
-}
+    });
 
-//Used to update the profit/loss graph if values were changed
-function updateProfitChartData() {
-    revenueChart = new Chart(profitContext, {
+
+    profitChart = new Chart(profitContext, {
         type: 'line',
         data: {
             labels: months,
@@ -114,7 +117,37 @@ function updateProfitChartData() {
                 zeroLineColor: "#000000"
             }
         }
-    });    
+    });
+
+
+}
+
+//Used to update the revenue/expenses graph with new values if values were changed
+function updateRevenueChartData() {
+
+    var i;
+    var revenues = calculateMonthlyRevenue();
+    var expenses = calculateMonthlyExpenses();
+
+    for (i = 0; i < 12; i++) {
+        revenueChart.data.datasets[0].data[i] = revenues[i];
+        revenueChart.data.datasets[1].data[i] = expenses[i];
+    }
+
+    revenueChart.update();
+}
+
+//Used to update the profit/loss graph if values were changed
+function updateProfitChartData() {
+
+    var i;
+    var profits = calculateMonthlyProfit();
+
+    for (i = 0; i < 12; i++) {
+        profitChart.data.datasets[0].data[i] = profits[i];
+    }
+
+    profitChart.update();
 }
 
 
@@ -150,11 +183,8 @@ function calculateMonthlyProfit() {
     var expenses = calculateMonthlyExpenses();
 
     for (i = 0; i < cropCounts.length; i++) {
-        profits[i] = revenues[i] - expenses[i]; 
+        profits[i] = revenues[i] - expenses[i];
     }
 
     return profits;
 }
-
-
-
