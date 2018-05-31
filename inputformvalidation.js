@@ -12,6 +12,7 @@ var revenueChart, profitChart;
 
 
 createCharts();
+updateTotals();
 
 function updateGraphs() {
     if (positiveInputValidation()) {
