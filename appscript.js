@@ -82,7 +82,7 @@ function createCharts() {
                 fill: false,
                 borderColor: "#FF4D4D"
             }
-            ],
+            ]
         },
 
         options: {
@@ -90,7 +90,9 @@ function createCharts() {
                 display: true,
                 fontSize: 20,
                 text: "Revenue and Expenses"
-            }
+            },
+
+            responsive: true
         }
     });
 
@@ -105,7 +107,7 @@ function createCharts() {
                 fill: false,
                 borderColor: "#F6FF3D"
             }
-            ],
+            ]
         },
 
         options: {
@@ -117,7 +119,9 @@ function createCharts() {
 
             scales: {
                 zeroLineColor: "#000000"
-            }
+            }, 
+
+            responsive: true
         }
     });
 
