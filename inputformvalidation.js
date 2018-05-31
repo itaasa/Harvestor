@@ -17,7 +17,8 @@ function updateGraphs() {
     if (positiveInputValidation()) {
         saveSingleData();
         updateRevenueChartData();
-        updateProfitChartData();       
+        updateProfitChartData();
+        updateTotals();
     }
 }
 
@@ -185,6 +186,45 @@ function calculateMonthlyProfit() {
     for (i = 0; i < cropCounts.length; i++) {
         profits[i] = revenues[i] - expenses[i];
     }
-
     return profits;
+}
+
+function updateTotals() {
+    var totalRevenue = document.getElementById("totalRevenue");
+    var totalExpenses = document.getElementById("totalExpenses");
+    var totalProfits = document.getElementById("totalProfit");
+
+    totalRevenue.innerHTML = "The total revenue of the year is: " + calculateTotalRevenue();
+    totalExpenses.innerHTML = "The total expenses of the year is: " + calculateTotalExpenses();
+    totalProfits.innerHTML = "The total profit of the year is: " + calculateTotalProfit();
+}
+
+function calculateTotalRevenue() {
+    var monthlyRevenue = calculateMonthlyRevenue();
+
+    var i, totalRevenue = 0;
+    for (i = 0; i < 12; i++)
+        totalRevenue += monthlyRevenue[i];
+
+    return totalRevenue;
+}
+
+function calculateTotalExpenses() {
+    var monthlyExpenses = calculateMonthlyExpenses();
+
+    var i, totalExpenses = 0;
+    for (i = 0; i < 12; i++)
+        totalExpenses += monthlyExpenses[i];
+
+    return totalExpenses;
+}
+
+function calculateTotalProfit() {
+    var monthlyProfit = calculateMonthlyProfit();
+
+    var i, totalProfit = 0;
+    for (i = 0; i < 12; i++)
+        totalProfit += monthlyProfit[i];
+
+    return totalProfit;
 }
