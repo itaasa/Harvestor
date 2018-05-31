@@ -1,0 +1,34 @@
+﻿#header {
+    padding: 250px 50px 50px 50px;
+    text-align: center;
+    
+    background-image: url(welcomefarmimage.jpg);
+    background-size: 100%, 50%;
+}
+
+body {
+    background-color: #FCF3CF;
+}
+
+h1 {
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 3rem;
+    color: white;
+    font-family: 'Raleway';
+    white-space: nowrap;
+}
+
+h6 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-family: 'Raleway';
+    color: white;
+}
+
+p {
+    margin: 0;
+    font-size: 1.5rem;
+    font-family: 'Raleway';
+    color: darkslategray;
+}
