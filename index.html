@@ -16,7 +16,7 @@
         <h1> Welcome to Harvestor!</h1>
         <h6>  ... a dynamic web application showcasing annual/monthly profits, revenue and expenses from crop yields. </h6>
     </header>
-
+<div id="main">
     <form class="yield-form">
 
         <p class="form-intro"> Enter any of the applicable data from this years crop yield here! </p><br />
@@ -36,7 +36,7 @@
 
 
         <label for="cropCount">Enter Crop Count</label>
-        <input type="number" id="cropCount" name="cropCount" value="0.000" step="1000" min="0" oninput="valueChange(this)" required>
+        <input type="number" id="cropCount" name="cropCount" value="0.000" step="100" min="0" oninput="valueChange(this)" required>
         <select id="cropMonth" name="cropMonth" onchange="monthChange(this)">
             <option selected value="1">January</option>
             <option value="2">February</option>
@@ -55,10 +55,10 @@
         <label for="unit">Choose unit</label>
 
         <label class="radio-label" for="kilos"> kg </label>
-        <input class="radio-button" type="radio" name="unit" id="kilos" value="kg(s)" required checked="checked">
+        <input class="radio-button" type="radio" name="unit" id="kilos" value="kgs" required checked="checked">
 
         <label class="radio-label" for="tons"> tons </label>
-        <input class="radio-button" type="radio" name="unit" id="tons" value="ton(s)" /> <br />
+        <input class="radio-button" type="radio" name="unit" id="tons" value="tons" /> <br />
 
 
         <label for="cropPrice">Price per unit</label>
@@ -73,20 +73,20 @@
         <label for="monthlyUtil">Monthly Utilities Expense</label>
         <input type="number" id="monthlyUtil" value="0.00" step="100" min="0" required /> <br />
 
-        <button type="button" onclick="updateGraphs()">Go</button>
+        <button type="button" onclick="updateGraphs()">Go</button> <br>
+
+        <div class="results">
+            <p id="totalRevenue"></p>
+            <p id="totalExpenses"></p>
+            <p id="totalProfit"></p>
+            <p id="totalCropCount"></p>
+        </div>
 
     </form>
-
-
-    <canvas class="chart" id="revenueChart"></canvas><br />
+    <canvas class="chart" id="revenueChart"></canvas>
     <canvas class="chart" id="profitChart"></canvas>
+</div>
 
-
-    <div id="annualTotals">
-        <p id="totalRevenue"></p>
-        <p id="totalExpenses"></p>
-        <p id="totalProfit"></p>
-    </div>
 
     <script type="text/javascript" src="appscript.js"></script>
 

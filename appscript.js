@@ -1,9 +1,8 @@
-// The following javascript will be called to ensure that all inputs from user are valid, and saves all user input to the variables below
 
 var cropCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var cropType = "Corn";
 var cropPrice = 0;
-var unit = "kg(s)";
+var unit = "kgs";
 var wageExpenses = 0, toolExpenses = 0, utilExpenses = 0;
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var revenueContext = document.getElementById("revenueChart").getContext("2d");
@@ -15,26 +14,13 @@ createCharts();
 updateTotals();
 
 function updateGraphs() {
-    if (positiveInputValidation()) {
-        saveSingleData();
-        updateRevenueChartData();
-        updateProfitChartData();
-        updateTotals();
-    }
+    saveSingleData();
+    updateRevenueChartData();
+    updateProfitChartData();
+    updateTotals();
 }
 
-function positiveInputValidation() {
-    for (i = 1; i < document.forms[0].length - 1; i++) {
-        if (document.forms[0].elements[i].value < 0) {
-            alert("Cannot have negative values.");
-            return false;
-        }
-    }
-
-    return true;
-}
-
-//Will change the display html value depending on the month selected 
+//Will change the display html value depending on the month selected
 function monthChange(val) {
     var cropCount = document.getElementById("cropCount");
     var selectedMonth = val.selectedIndex;
@@ -91,8 +77,28 @@ function createCharts() {
                 fontSize: 20,
                 text: "Revenue and Expenses"
             },
+            responsive: true,
+            scales: {
+              xAxes: [{
+                  gridLines: {
+                      lineWidth: 2.5,
+                      color: "#C0C0C0"
+                  },
+                  ticks: {
+                      fontSize: 20
+                  }
+                },],
 
-            responsive: true
+                yAxes: [{
+                    gridLines: {
+                        lineWidth: 2.5,
+                        color: "#C0C0C0"
+                    },
+                    ticks: {
+                        fontSize: 15
+                    }
+                }]
+            }
         }
     });
 
@@ -105,7 +111,7 @@ function createCharts() {
                 label: 'Profit/Loss',
                 data: calculateMonthlyProfit(),
                 fill: false,
-                borderColor: "#F6FF3D"
+                borderColor: "#CC6600"
             }
             ]
         },
@@ -118,8 +124,26 @@ function createCharts() {
             },
 
             scales: {
-                zeroLineColor: "#000000"
-            }, 
+                xAxes: [{
+                    gridLines: {
+                        lineWidth: 2.5,
+                        color: "#C0C0C0"
+                    },
+                    ticks: {
+                        fontSize: 20
+                    }
+                }],
+
+                yAxes: [{
+                    gridLines: {
+                        lineWidth: 2.5,
+                        color: "#C0C0C0"
+                    },
+                    ticks: {
+                        fontSize: 15
+                    }
+                }]
+            },
 
             responsive: true
         }
@@ -198,10 +222,13 @@ function updateTotals() {
     var totalRevenue = document.getElementById("totalRevenue");
     var totalExpenses = document.getElementById("totalExpenses");
     var totalProfits = document.getElementById("totalProfit");
+    var totalCropCount = document.getElementById("totalCropCount");
 
-    totalRevenue.innerHTML = "The total revenue of the year is: " + calculateTotalRevenue();
-    totalExpenses.innerHTML = "The total expenses of the year is: " + calculateTotalExpenses();
-    totalProfits.innerHTML = "The total profit of the year is: " + calculateTotalProfit();
+    totalRevenue.innerHTML = "The total revenue of the year is: $" + calculateTotalRevenue();
+    totalExpenses.innerHTML = "The total expenses of the year is: $" + calculateTotalExpenses();
+    totalProfits.innerHTML = "The total profit of the year is: $" + calculateTotalProfit();
+    totalCropCount.innerHTML = "The total crop count of the year is: " + calculateTotalCropCount() + " " + unit + " of " + cropType.toLowerCase();
+
 }
 
 function calculateTotalRevenue() {
@@ -232,4 +259,13 @@ function calculateTotalProfit() {
         totalProfit += monthlyProfit[i];
 
     return totalProfit;
+}
+
+function calculateTotalCropCount(){
+
+    var i, totalCropCount = 0;
+    for (i = 0; i < 12; i++)
+        totalCropCount += cropCounts[i];
+
+    return totalCropCount;
 }
