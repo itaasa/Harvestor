@@ -8,5 +8,5 @@ This will be a web application using HTML, CSS and JavaScript. The user will ent
 5. Monthly Tool Expenses
 6. Monthly Utilities Expenses
 
-The application will then display through graphs (chart.js) the values entered from the user input. The graph will also showcase points of profit/loss, how much more crop would be needed to make up for loses etc. The application will also display the total profit made for the year.
+The application will then display through graphs (chart.js) the values entered from the user input. The graph will also showcase points of profit/loss. Also yearly totals for revenue, expenses, profits after input has been read. The graphs were made to be dynamic, so if the user decides to change data values, the graphs will be updated as well. 
 
